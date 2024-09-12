@@ -12,14 +12,13 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await FirebaseFirestore.instance.disableNetwork();
-
+  
   FirebaseFirestore.instance.settings =
     const Settings(cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED);
 
   runApp(MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => TodoProvider()),  // Example provider
+        ChangeNotifierProvider(create: (_) => TodoProvider()),  
       ],
       child: const MyApp())
       );

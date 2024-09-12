@@ -19,7 +19,13 @@ class ListTab extends StatefulWidget {
 class _ListTabState extends State<ListTab> {
   DateTime selectedCalendarDate = DateTime.now();
   List<ToDoDm> toDosList = [];
+   void deleteTodoItem(ToDoDm item) {
+    setState(() {
+      toDosList.remove(item); 
+    });
+  }
   @override
+
   Widget build(BuildContext context) {
     getToDosFromDataBase();
     return Column(
@@ -30,7 +36,9 @@ class _ListTabState extends State<ListTab> {
             child: ListView.builder(
                 itemCount: toDosList.length,
                 itemBuilder: (context, index) {
-                  return Todo(item: toDosList[index], onDelete: (todo) {  },);
+                  return Todo(item: toDosList[index],
+                    deleteTodo:deleteTodoItem ,
+                   );
                 }))
       ],
     );

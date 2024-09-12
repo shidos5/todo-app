@@ -6,9 +6,9 @@ import 'package:todo6/utils/app_style.dart';
 
 class Todo extends StatefulWidget {
   final ToDoDm item;
-  final Function(ToDoDm) onDelete; // Callback to handle deletion
+  final Function(ToDoDm) deleteTodo; 
 
-  const Todo({super.key, required this.item, required this.onDelete});
+  const Todo({super.key, required this.item, required this.deleteTodo});
 
   @override
   State<Todo> createState() => _TodoState();
@@ -16,7 +16,7 @@ class Todo extends StatefulWidget {
 
 class _TodoState extends State<Todo> {
   CrossFadeState crossFadeState = CrossFadeState.showFirst;
-
+List <ToDoDm> todos = [];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,7 +26,7 @@ class _TodoState extends State<Todo> {
           motion: const ScrollMotion(),
           children: [
             SlidableAction(
-              onPressed: (context) => deleteItem(),
+              onPressed: (context) => deleteItem(), 
               foregroundColor: Colors.white,
               backgroundColor: Colors.red,
               icon: Icons.delete,
@@ -74,12 +74,14 @@ class _TodoState extends State<Todo> {
       ),
     );
   }
+ void deleteItem() {
+    setState(() {
+     widget.deleteTodo(widget.item); 
+    });
 
-  void deleteItem() {
-   setState(() {
-      widget.onDelete(widget.item); 
-   });
   }
+
+
 
   buildVerticalLine(BuildContext context) => Container(
         height: MediaQuery.of(context).size.height * .07,
@@ -127,11 +129,11 @@ class _TodoState extends State<Todo> {
               borderRadius: BorderRadius.circular(16),
             ),
             padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-            child:  const Icon(
+            child: const Icon(
               Icons.done,
               color: Colors.white,
               size: 35,
-              semanticLabel: 'Mark as Done ',
+              semanticLabel: 'Mark as Done',
             ),
           ),
           secondChild: const Text(
@@ -146,4 +148,5 @@ class _TodoState extends State<Todo> {
           duration: const Duration(milliseconds: 500),
         ),
       );
+ 
 }
